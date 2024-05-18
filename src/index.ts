@@ -57,7 +57,7 @@ export const applyVikeAppToExpressApp = async <
     const vite = await import('vite')
     const viteDevMiddleware = (
       await vite.createServer({
-        root: root,
+        root,
         server: {
           middlewareMode: true,
           fs: {
@@ -75,29 +75,35 @@ export const applyVikeAppToExpressApp = async <
 
   // Vike middleware. It should always be our last middleware (because it's a
   // catch-all middleware superseding any middleware placed after it).
-  expressApp.get('*', async (req, res, next) => {
-    const pageContextInit = {
-      urlOriginal: req.originalUrl,
-      ...(await extendPageContext?.(appContext, req as any)),
-    }
-    const pageContext = await renderPage(pageContextInit)
-    if (pageContext.errorWhileRendering) {
-      // Install error tracking here, see https://vike.dev/errors
-    }
-    const { httpResponse } = pageContext
-    if (!httpResponse) {
-      return next()
-    } else {
-      const { body, statusCode, headers, earlyHints } = httpResponse
-      if (res.writeEarlyHints) res.writeEarlyHints({ link: earlyHints.map((e) => e.earlyHintLink) })
-      headers.forEach(([name, value]) => res.setHeader(name, value))
-      res.status(statusCode)
-      // For HTTP streams use httpResponse.pipe() instead, see https://vike.dev/streaming
-      const bodyWithEnv = body.replace(
-        '{ replaceMeWithPublicEnvFromBackend: true }',
-        JSON.stringify(publicEnv, null, 2)
-      )
-      res.send(bodyWithEnv)
-    }
+  expressApp.get('*', (req, res, next) => {
+    void (async () => {
+      try {
+        const pageContextInit = {
+          urlOriginal: req.originalUrl,
+          ...(await extendPageContext?.(appContext, req as any)),
+        }
+        const pageContext = await renderPage(pageContextInit)
+        if (pageContext.errorWhileRendering) {
+          // Install error tracking here, see https://vike.dev/errors
+        }
+        const { httpResponse } = pageContext
+        if (!httpResponse) {
+          next()
+        } else {
+          const { body, statusCode, headers, earlyHints } = httpResponse
+          if (res.writeEarlyHints) res.writeEarlyHints({ link: earlyHints.map((e) => e.earlyHintLink) })
+          for (const [name, value] of headers) res.setHeader(name, value)
+          res.status(statusCode)
+          // For HTTP streams use httpResponse.pipe() instead, see https://vike.dev/streaming
+          const bodyWithEnv = body.replace(
+            '{ replaceMeWithPublicEnvFromBackend: true }',
+            JSON.stringify(publicEnv, null, 2)
+          )
+          res.send(bodyWithEnv)
+        }
+      } catch (error) {
+        next(error)
+      }
+    })()
   })
 }
