@@ -1,7 +1,10 @@
+import type { ToErroryType } from 'errory'
+import { createErroryThings } from 'errory'
 import { type Express } from 'express'
 import fs from 'fs'
 import path from 'path'
 import { renderPage } from 'vike/server'
+import type { PageContextServer } from 'vike/types'
 
 const findFilePath = ({ cwd, lastPathPart }: { cwd: string; lastPathPart: string }): string | null => {
   const maybeEnvFilePath = path.join(cwd, lastPathPart)
@@ -18,11 +21,16 @@ export const createVikeServerThings = <
   TAppContext extends Record<string, any>,
   TExpressRequest extends Express.Request,
   TExtendsOfPageContext extends Record<string, any>,
+  TToErroryType extends ToErroryType,
 >({
   extendPageContext,
+  toErrory,
 }: {
   extendPageContext: (appContext: TAppContext, req: TExpressRequest) => Promise<TExtendsOfPageContext>
+  toErrory?: TToErroryType
 }) => {
+  toErrory = toErrory || (createErroryThings().toErrory as TToErroryType)
+
   const applyVikeAppToExpressApp = async ({
     expressApp,
     appContext,
@@ -111,8 +119,28 @@ export const createVikeServerThings = <
     })
   }
 
+  const createDataGetter = <TData>(
+    dataGetter: (pageContext: PageContextServer) => Promise<TData>
+  ): ((pageContext: PageContextServer) => Promise<
+    | TData
+    | {
+        dataGetterError: ReturnType<TToErroryType>
+      }
+  >) => {
+    return (async (pageContext: PageContextServer) => {
+      try {
+        return await dataGetter(pageContext)
+      } catch (error) {
+        return {
+          dataGetterError: toErrory(error),
+        }
+      }
+    }) as any
+  }
+
   return {
     applyVikeAppToExpressApp,
     extendPageContext,
+    createDataGetter,
   }
 }
