@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   errory:
-    specifier: ^0.1.11
-    version: 0.1.11
+    specifier: ^0.1.12
+    version: 0.1.12
   sirv:
     specifier: ^2.0.4
     version: 2.0.4
@@ -3142,8 +3142,8 @@ packages:
       is-arrayish: 0.2.1
     dev: true
 
-  /errory@0.1.11:
-    resolution: {integrity: sha512-VrR7+cYMHl5mJ1P487tfAX/TSMg9Dy8O+Ei5UrR0NwA2sbaTifx+A4bvRH3+FuUw7N7a9/9tEnJGev3YkwIYsg==}
+  /errory@0.1.12:
+    resolution: {integrity: sha512-5OqKXrphIfe/2B4YS/92PLGrKxRyhph0YVrVvEfUc2jAr04MGlI54Uvdc8374pU0154Iq7rElzyXBzxu1zgQBA==}
     dependencies:
       lodash: 4.17.21
     dev: false

@@ -1,4 +1,4 @@
-import type { ToErroryType } from 'errory'
+import type { ErroryType } from 'errory'
 import { createErroryThings } from 'errory'
 import { type Express } from 'express'
 import fs from 'fs'
@@ -21,15 +21,15 @@ export const createVikeServerThings = <
   TAppContext extends Record<string, any>,
   TExpressRequest extends Express.Request,
   TExtendsOfPageContext extends Record<string, any>,
-  TToErroryType extends ToErroryType,
+  TErroryType extends ErroryType,
 >({
   extendPageContext,
-  toErrory,
+  Errory,
 }: {
   extendPageContext: (appContext: TAppContext, req: TExpressRequest) => Promise<TExtendsOfPageContext>
-  toErrory?: TToErroryType
+  Errory?: TErroryType
 }) => {
-  toErrory = toErrory || (createErroryThings().toErrory as TToErroryType)
+  Errory = Errory || (createErroryThings().Errory as TErroryType)
 
   const applyVikeAppToExpressApp = async ({
     expressApp,
@@ -124,7 +124,7 @@ export const createVikeServerThings = <
   ): ((pageContext: PageContextServer) => Promise<
     | TData
     | {
-        dataGetterError: ReturnType<TToErroryType>
+        dataGetterError: ReturnType<TErroryType['toErrory']>
       }
   >) => {
     return (async (pageContext: PageContextServer) => {
@@ -132,7 +132,7 @@ export const createVikeServerThings = <
         return await dataGetter(pageContext)
       } catch (error) {
         return {
-          dataGetterError: toErrory(error),
+          dataGetterError: Errory.toErrory(error),
         }
       }
     }) as any
