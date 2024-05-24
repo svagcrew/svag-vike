@@ -58,6 +58,17 @@ export const createVikeServerThings = <
     if (mode === 'production') {
       // In production, we need to serve our static assets ourselves.
       // (In dev, Vite's middleware serves our static assets.)
+      const serverEntryPathJs = path.resolve(root, 'dist/server/entry.js')
+      const serverEntryPathMjs = path.resolve(root, 'dist/server/entry.mjs')
+      const serverEntryPath = fs.existsSync(serverEntryPathJs)
+        ? serverEntryPathJs
+        : fs.existsSync(serverEntryPathMjs)
+          ? serverEntryPathMjs
+          : null
+      if (!serverEntryPath) {
+        throw new Error(`Server entry file not found: ${serverEntryPathJs}`)
+      }
+      await import(serverEntryPath)
       const sirv = (await import('sirv')).default
       const distClientPath = path.resolve(root, 'dist/client')
       expressApp.use(sirv(distClientPath))
