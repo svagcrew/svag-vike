@@ -1,10 +1,7 @@
-import type { ErroryType } from 'errory'
-import { createErroryThings } from 'errory'
 import { type Express } from 'express'
 import fs from 'fs'
 import path from 'path'
 import { renderPage } from 'vike/server'
-import type { PageContextServer } from 'vike/types'
 
 const findFilePath = ({ cwd, lastPathPart }: { cwd: string; lastPathPart: string }): string | null => {
   const maybeEnvFilePath = path.join(cwd, lastPathPart)
@@ -21,16 +18,13 @@ export const createVikeServerThings = <
   TAppContext extends Record<string, any>,
   TExpressRequest extends Express.Request,
   TExtendsOfPageContext extends Record<string, any>,
-  TErroryType extends ErroryType,
 >({
   extendPageContext,
-  Errory,
+  logger = console,
 }: {
   extendPageContext: (appContext: TAppContext, req: TExpressRequest) => Promise<TExtendsOfPageContext>
-  Errory?: TErroryType
+  logger?: { error: (...props: any[]) => any; info: (...props: any[]) => any }
 }) => {
-  Errory = Errory || (createErroryThings().Errory as TErroryType)
-
   const applyVikeAppToExpressApp = async ({
     expressApp,
     appContext,
@@ -107,6 +101,7 @@ export const createVikeServerThings = <
           const pageContext = await renderPage(pageContextInit)
           if (pageContext.errorWhileRendering) {
             // Install error tracking here, see https://vike.dev/errors
+            logger.error({ error: pageContext.errorWhileRendering, tag: 'vike', meta: { url: req.originalUrl } })
           }
           const { httpResponse } = pageContext
           if (!httpResponse) {
@@ -130,28 +125,8 @@ export const createVikeServerThings = <
     })
   }
 
-  const createDataGetter = <TData>(
-    dataGetter: (pageContext: PageContextServer) => Promise<TData>
-  ): ((pageContext: PageContextServer) => Promise<
-    | TData
-    | {
-        dataGetterError: ReturnType<TErroryType['toErrory']>
-      }
-  >) => {
-    return (async (pageContext: PageContextServer) => {
-      try {
-        return await dataGetter(pageContext)
-      } catch (error) {
-        return {
-          dataGetterError: Errory.toErrory(error),
-        }
-      }
-    }) as any
-  }
-
   return {
     applyVikeAppToExpressApp,
     extendPageContext,
-    createDataGetter,
   }
 }
