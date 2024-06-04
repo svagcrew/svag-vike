@@ -22,7 +22,7 @@ export const createVikeClientThings = <
       } & TDataGetterResultExtra)
   >) => {
     return (async (pageContext: PageContextServer) => {
-      const result = await (async () => {
+      const dataGetterResult = await (async () => {
         try {
           return await dataGetter(pageContext)
         } catch (error) {
@@ -33,7 +33,7 @@ export const createVikeClientThings = <
       })()
       const extra = dataGetterResultExtender(pageContext)
       return {
-        ...result,
+        ...dataGetterResult,
         ...extra,
       } as any
     }) as any
