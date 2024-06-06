@@ -57,7 +57,7 @@
   },
   "type": "module",
   "dependencies": {
-    "errory": "^0.1.15",
+    "errory": "^0.1.16",
     "sirv": "^2.0.4"
   },
   "peerDependencies": {

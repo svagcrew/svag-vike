@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   errory:
-    specifier: ^0.1.15
-    version: 0.1.15
+    specifier: ^0.1.16
+    version: 0.1.16
   sirv:
     specifier: ^2.0.4
     version: 2.0.4
@@ -3142,8 +3142,8 @@ packages:
       is-arrayish: 0.2.1
     dev: true
 
-  /errory@0.1.15:
-    resolution: {integrity: sha512-jvbPumGoSIXESg0EXIBtKWuUpl1dV+nRzcIvLqkLZK8KfdQDgq9Qknll/VK83TBw7C7z9VdrR7zJA7PbcA5Wqw==}
+  /errory@0.1.16:
+    resolution: {integrity: sha512-AnlrDbjhAnOlucO5713zA0RUTmKaIrf2eIYdwxtVCaevUk3izah+PWlqdXHVqhGXrLJFIRXLagu8AsCCwcJYSA==}
     dependencies:
       lodash: 4.17.21
     dev: false
@@ -6751,30 +6751,6 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svag-cli-utils@0.1.65(@types/node@20.12.12):
-    resolution: {integrity: sha512-Ci0mTyFoBlyu0Xnhkvi7RI4scz6p1BUCalWfuY7XqqphTufvYBiWDyK+XoBz5UN1CaBAGv5w5cu/wP9RCiwvaw==}
-    dependencies:
-      dedent: 1.5.3
-      edit-json-file: 1.8.0
-      enquirer: 2.4.1
-      fast-glob: 3.3.2
-      js-yaml: 4.1.0
-      json-stable-stringify: 1.1.1
-      lodash: 4.17.21
-      omelette: 0.4.17
-      picocolors: 1.0.1
-      ts-node: 10.9.2(@types/node@20.12.12)(typescript@5.4.5)
-      tsx: 4.11.2
-      typescript: 5.4.5
-      yargs: 17.7.2
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - babel-plugin-macros
-    dev: true
-
   /svag-cli-utils@0.1.67(@types/node@20.12.12):
     resolution: {integrity: sha512-blXoB9DN/rIE8ex2P1b4fUFid5wU0x/etAM2HauatD5iFZS29udrXcB4shPnI8s1BJQicM8kNsl4wXhMKiWBHg==}
     dependencies:
@@ -6823,7 +6799,7 @@ packages:
       dedent: 1.5.3
       eslint: 9.3.0
       lodash: 4.17.21
-      svag-cli-utils: 0.1.65(@types/node@20.12.12)
+      svag-cli-utils: 0.1.67(@types/node@20.12.12)
       ts-jest: 29.1.2(@babel/core@7.24.5)(jest@30.0.0-alpha.4)(typescript@5.4.5)
       typescript: 5.4.5
       zod: 3.23.8
