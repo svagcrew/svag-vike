@@ -52,7 +52,7 @@
     "ts-jest": "^29.1.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.4.5",
-    "vike": "^0.4.171",
+    "vike": "^0.4.173",
     "vite": "^5.2.11"
   },
   "type": "module",
@@ -61,7 +61,7 @@
     "sirv": "^2.0.4"
   },
   "peerDependencies": {
-    "vike": "^0.4.171",
+    "vike": "^0.4.173",
     "vite": "^5.2.11"
   }
 }
