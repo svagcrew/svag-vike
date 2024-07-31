@@ -1,6 +1,6 @@
 {
   "name": "svag-vike",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "homepage": "https://github.com/svagcrew/svag-vike",
   "repository": {
     "type": "git",
@@ -22,15 +22,23 @@
     "./dist/**/*"
   ],
   "scripts": {
-    "prettify": "svag-prettier prettify",
-    "dev": "svag-ts dev",
-    "watch": "svag-ts watch",
-    "types": "svag-ts types",
     "build": "svag-ts build",
-    "start": "svag-ts start",
+    "dev": "svag-ts dev",
     "lint": "svag-lint lint",
+    "prepare": "husky",
+    "prettify": "svag-prettier prettify",
+    "start": "svag-ts start",
     "test": "svag-jest test",
-    "prepare": "husky"
+    "types": "svag-ts types",
+    "watch": "svag-ts watch"
+  },
+  "peerDependencies": {
+    "vike": "^0.4.173",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "errory": "^0.1.17",
+    "sirv": "^2.0.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
@@ -55,13 +63,5 @@
     "vike": "^0.4.173",
     "vite": "^5.2.11"
   },
-  "type": "module",
-  "dependencies": {
-    "errory": "^0.1.17",
-    "sirv": "^2.0.4"
-  },
-  "peerDependencies": {
-    "vike": "^0.4.173",
-    "vite": "^5.2.11"
-  }
+  "type": "module"
 }
