@@ -33,7 +33,7 @@
     "watch": "svag-ts watch"
   },
   "peerDependencies": {
-    "vike": "^0.4.173",
+    "vike": "^0.4.179",
     "vite": "^5.2.11"
   },
   "dependencies": {
@@ -60,7 +60,7 @@
     "ts-jest": "^29.1.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.4.5",
-    "vike": "^0.4.173",
+    "vike": "^0.4.179",
     "vite": "^5.2.11"
   },
   "type": "module"

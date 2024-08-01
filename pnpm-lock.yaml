@@ -73,8 +73,8 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
       vike:
-        specifier: ^0.4.173
-        version: 0.4.174(vite@5.2.11(@types/node@20.12.12))
+        specifier: ^0.4.179
+        version: 0.4.179(vite@5.2.11(@types/node@20.12.12))
       vite:
         specifier: ^5.2.11
         version: 5.2.11(@types/node@20.12.12)
@@ -3694,12 +3694,12 @@ packages:
     resolution: {integrity: sha512-Z6Uz+TYwEqE7ZN50gwn+1LCVo9ZVrpxRPOhOLnncYkY1ZzOYtrX8Fwf/rFktZ8R5mJms6EZf5TqNOMeZmnPq9Q==}
     engines: {node: '>=12'}
 
-  vike@0.4.174:
-    resolution: {integrity: sha512-RgicUKxcm6SsOoyJWx3W853qvS8vigZjdKc2OzrGMxSfmvwHAzWtYO69MELWB8jZRDmALwDOuzCpmHUV2n2fbw==}
+  vike@0.4.179:
+    resolution: {integrity: sha512-Uie4cUCUa4DULy5O5s4tHvQcbySTRGpNFkIxctBY6nXB/DgkJaQVx+o/nSBcK+np43WXbAciNGt6VX/qfIoUvw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      react-streaming: '>=0.3.5'
+      react-streaming: '>=0.3.41'
       vite: '>=4.4.0'
     peerDependenciesMeta:
       react-streaming:
@@ -8246,7 +8246,7 @@ snapshots:
 
   value-or-promise@1.0.12: {}
 
-  vike@0.4.174(vite@5.2.11(@types/node@20.12.12)):
+  vike@0.4.179(vite@5.2.11(@types/node@20.12.12)):
     dependencies:
       '@brillout/import': 0.2.3
       '@brillout/json-serializer': 0.5.10
