@@ -17,12 +17,17 @@ const findFilePath = ({ cwd, lastPathPart }: { cwd: string; lastPathPart: string
 export const createVikeServerThings = <
   TAppContext extends Record<string, any>,
   TExpressRequest extends Express.Request,
+  TExpressResponse extends Express.Response,
   TExtendsOfPageContext extends Record<string, any>,
 >({
   extendPageContext,
   logger = console,
 }: {
-  extendPageContext: (appContext: TAppContext, req: TExpressRequest) => Promise<TExtendsOfPageContext>
+  extendPageContext: (
+    appContext: TAppContext,
+    req: TExpressRequest,
+    res: TExpressResponse
+  ) => Promise<TExtendsOfPageContext>
   logger?: { error: (...props: any[]) => any; info: (...props: any[]) => any }
 }) => {
   const applyVikeAppToExpressApp = async ({
@@ -96,7 +101,7 @@ export const createVikeServerThings = <
         try {
           const pageContextInit = {
             urlOriginal: req.originalUrl,
-            ...((await extendPageContext?.(appContext as any, req as any)) as {}),
+            ...((await extendPageContext?.(appContext as any, req as any, res as any)) as {}),
           }
           const pageContext = await renderPage(pageContextInit)
           if (pageContext.errorWhileRendering) {
